@@ -10,7 +10,7 @@ Content-Type: application/json
 
 GET {{base_url}}/cards/
 Accept: application/json
-Authorization: JWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoyMzksInVzZXJuYW1lIjoiYXJtYWRhIiwiZXhwIjoxNjA3ODgzMjM2LCJlbWFpbCI6IiIsIm9yaWdfaWF0IjoxNjA3ODc5NjM2fQ.6aU8UE5EmKu-F3-EQBN--o14VnCFF-cvCDIiWD36p_k
+Authorization: JWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoyMzksInVzZXJuYW1lIjoiYXJtYWRhIiwiZXhwIjoxNjA3ODkwNjE1LCJlbWFpbCI6IiIsIm9yaWdfaWF0IjoxNjA3ODg3MDE1fQ.jtKS9RoRku_BQF6NvLDMaCDISy1RagGDZ-peINYH20o
 
 
 ###

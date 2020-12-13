@@ -15,10 +15,11 @@ class CardModel extends Equatable {
   });
 
   factory CardModel.fromJson(Map<String, dynamic> json) => CardModel._(
-      id: int.tryParse(json['id']),
-      row: int.tryParse(json['row']),
-      seqNum: int.tryParse(json['seq_num']),
-      text: json['text']);
+        id: json['id'] as int,
+        row: json['row'] as int,
+        seqNum: json['seq_num'] as int,
+        text: json['text'] as String,
+      );
 
   @override
   List<Object> get props => [id, row, seqNum, text];
