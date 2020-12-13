@@ -1,0 +1,28 @@
+POST {{base_url}}/users/login/
+Content-Type: application/json
+
+{
+    "username": "{{login}}",
+    "password": "{{password}}"
+}
+
+###
+
+GET {{base_url}}/cards/
+Accept: application/json
+Authorization: JWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoyMzksInVzZXJuYW1lIjoiYXJtYWRhIiwiZXhwIjoxNjA3ODgzMjM2LCJlbWFpbCI6IiIsIm9yaWdfaWF0IjoxNjA3ODc5NjM2fQ.6aU8UE5EmKu-F3-EQBN--o14VnCFF-cvCDIiWD36p_k
+
+
+###
+
+POST {{base_url}}/users/login/
+Content-Type: application/json
+
+{
+    "username": "{{login}}",
+    "password": "{{password}}"
+}
+
+
+
+
