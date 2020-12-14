@@ -5,6 +5,8 @@ class AuthException implements Exception {
     this._message = message;
   }
 
+  String get message => _message;
+
   @override
   String toString() {
     return _message;

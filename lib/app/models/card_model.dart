@@ -16,7 +16,7 @@ class CardModel extends Equatable {
 
   factory CardModel.fromJson(Map<String, dynamic> json) => CardModel._(
         id: json['id'] as int,
-        row: json['row'] as int,
+        row: int.parse(json['row']),
         seqNum: json['seq_num'] as int,
         text: json['text'] as String,
       );

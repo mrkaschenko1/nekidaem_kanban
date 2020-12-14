@@ -21,12 +21,3 @@ class AuthAuthenticated extends AuthInitial {
   @override
   List<Object> get props => [user];
 }
-
-class AuthFailure extends AuthInitial {
-  final String message;
-
-  AuthFailure({@required this.message});
-
-  @override
-  List<Object> get props => [message];
-}

@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
-import 'package:http/http.dart';
 import 'package:nekidaem_kanban/app/models/user_model.dart';
 import 'package:nekidaem_kanban/app/repositories/repository.dart';
 
@@ -25,23 +24,26 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     if (event is AppLoaded) {
       yield AuthLoading();
       try {
-        final currentUser = await _repository.currentUser;
-
+        UserModel currentUser = await _repository.currentUser;
         if (currentUser != null) {
+          currentUser = currentUser.copyWith(
+            token: await _repository.refreshToken(currentUser.token),
+          );
           yield AuthAuthenticated(user: currentUser);
         } else {
           yield AuthNotAuthenticated();
         }
-      } on Response catch (e) {
-        yield AuthFailure(message: e.reasonPhrase);
-      } catch (e) {
-        yield AuthFailure(message: e.message ?? 'Unknown error');
+      } on Exception {
+        // if we can't refresh token then logout
+        await _repository.logout();
+        yield AuthNotAuthenticated();
       }
     }
     if (event is LoggedIn) {
       yield AuthAuthenticated(user: event.user);
     }
     if (event is LoggedOut) {
+      yield AuthLoading();
       await _repository.logout();
       yield AuthNotAuthenticated();
     }

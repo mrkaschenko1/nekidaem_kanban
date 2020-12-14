@@ -1,4 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:nekidaem_kanban/app/blocs/authentication/auth_bloc.dart';
+import 'package:nekidaem_kanban/app/blocs/cards/cards_bloc.dart';
+import 'package:nekidaem_kanban/app/repositories/api.dart';
+
+import 'app/repositories/repository.dart';
+import 'app/ui/home_screen.dart';
+import 'app/ui/login_screen.dart';
 
 void main() {
   runApp(MyApp());
@@ -7,33 +16,37 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
+    return RepositoryProvider(
+      create: (_) => Repository(
+          apiEndponts: API.getInstance(),
+          secureStorage: FlutterSecureStorage()),
+      child: BlocProvider<AuthBloc>(
+        create: (context) {
+          final repository = RepositoryProvider.of<Repository>(context);
+          return AuthBloc(repository)..add(AppLoaded());
+        },
+        child: MaterialApp(
+          title: 'NeKidaem',
+          theme: ThemeData(
+            primarySwatch: Colors.cyan,
+          ),
+          home: BlocBuilder<AuthBloc, AuthState>(
+            builder: (_, state) {
+              if (state is AuthAuthenticated) {
+                return BlocProvider(
+                  create: (context) =>
+                      CardsBloc(RepositoryProvider.of<Repository>(context))
+                        ..add(CardsFetch()),
+                  child: HomeScreen(
+                    user: state.user,
+                  ),
+                );
+              }
+              return LoginScreen();
+            },
+          ),
+        ),
       ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
-    );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
-  final String title;
-
-  @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      body: Center(),
     );
   }
 }

@@ -18,6 +18,12 @@ class UserModel extends Equatable {
         token: json['token'] as String,
       );
 
+  UserModel copyWith({String token}) => UserModel(
+        username: this.username,
+        password: this.password,
+        token: this.token,
+      );
+
   @override
   List<Object> get props => [username, password, token];
 }

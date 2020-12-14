@@ -7,22 +7,17 @@ Content-Type: application/json
 }
 
 ###
-
 GET {{base_url}}/cards/
 Accept: application/json
-Authorization: JWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoyMzksInVzZXJuYW1lIjoiYXJtYWRhIiwiZXhwIjoxNjA3ODkwNjE1LCJlbWFpbCI6IiIsIm9yaWdfaWF0IjoxNjA3ODg3MDE1fQ.jtKS9RoRku_BQF6NvLDMaCDISy1RagGDZ-peINYH20o
-
+Authorization: JWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoyMzksInVzZXJuYW1lIjoiYXJtYWRhIiwiZXhwIjoxNjA3OTM5ODE0LCJlbWFpbCI6IiIsIm9yaWdfaWF0IjoxNjA3OTM2MTk5fQ.Fsz7xdmci3xXfPtgVkZ7nvYCwPe5kSded0fgNkxA68k
 
 ###
-
-POST {{base_url}}/users/login/
+POST {{base_url}}/users/refresh_token/
 Content-Type: application/json
 
 {
-    "username": "{{login}}",
-    "password": "{{password}}"
+    "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoyMzksInVzZXJuYW1lIjoiYXJtYWRhIiwiZXhwIjoxNjA3OTM5ODE0LCJlbWFpbCI6IiIsIm9yaWdfaWF0IjoxNjA3OTM2MTk5fQ.Fsz7xdmci3xXfPtgVkZ7nvYCwPe5kSded0fgNkxA68k"
 }
-
 
 
 

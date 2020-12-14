@@ -1,9 +1,11 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart';
+import 'package:nekidaem_kanban/app/exceptions/auth_exception.dart';
 import '../../repositories/repository.dart';
 import '../authentication/auth_bloc.dart';
 
@@ -14,7 +16,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   final AuthBloc _authBloc;
   final Repository _repository;
 
-  LoginBloc(AuthBloc authBloc, Repository repository)
+  LoginBloc({@required AuthBloc authBloc, @required Repository repository})
       : assert(authBloc != null),
         assert(repository != null),
         _authBloc = authBloc,
@@ -32,15 +34,17 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
             username: event.username, password: event.password);
         if (user != null) {
           _authBloc.add(LoggedIn(user: user));
-          yield LoginSuccess();
           yield LoginInitial();
         } else {
-          yield LoginFailure(message: 'Unknown Error');
+          throw Exception();
         }
-      } on Response catch (e) {
-        yield LoginFailure(message: e.reasonPhrase);
+      } on AuthException catch (e) {
+        yield LoginFailure(message: e.message);
+      } on SocketException {
+        yield LoginFailure(message: 'Network error');
       } catch (e) {
         yield LoginFailure(message: e.message ?? 'Unknown Error');
+        print(e);
       }
     }
   }

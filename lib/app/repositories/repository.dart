@@ -17,38 +17,45 @@ class Repository {
     @required this.secureStorage,
   });
 
-  Future<String> tryLogin(
+  Future<UserModel> tryLogin(
       {@required String username, @required String password}) async {
     final response = await http.post(
         apiEndponts.getEndpoint(Endpoint.login).toString(),
         body: {'username': username, 'password': password});
+    // mistake in docs??? (token) instead of (username, password, token)
+    print(response.body);
 
+    final responseBody = json.decode(response.body);
+
+    // mistake in docs??? (200) instead of (201)
     if (response.statusCode == 200) {
-      final data = json.decode(response.body);
-      final token = data['token'];
-      if (token != null) {
-        await _updateToken(token);
-        return token;
+      final token = responseBody["token"] ?? null;
+      final user =
+          UserModel(username: username, password: password, token: token);
+      if (user.token != null) {
+        await _setUser(user);
+        return user;
       }
     }
-    throw response;
+    throw AuthException(response.reasonPhrase);
   }
 
   Future<List<CardModel>> getCards() async {
     var token = await this.token;
     var response = await http.get(
       apiEndponts.getEndpoint(Endpoint.cards).toString(),
-      headers: {'Authorization': 'JWT $token'},
+      headers: {'Authorization': 'JWT $token', 'Encoding': 'utf-8'},
     );
     if (response.statusCode == 401) {
-      token = await _refreshToken(token);
+      token = await refreshToken(token);
       response = await http.get(
         apiEndponts.getEndpoint(Endpoint.cards).toString(),
         headers: {'Authorization': 'JWT $token'},
       );
     }
     if (response.statusCode == 200) {
-      final List<dynamic> cardsJson = json.decode(response.body) as List;
+      final List<dynamic> cardsJson =
+          json.decode(Utf8Decoder().convert(response.bodyBytes)) as List;
       if (cardsJson != null) {
         List<CardModel> cards =
             cardsJson.map((cardJson) => CardModel.fromJson(cardJson)).toList();
@@ -62,16 +69,19 @@ class Repository {
     throw response;
   }
 
-  Future<String> _refreshToken(String oldToken) async {
+  Future<String> refreshToken(String oldToken) async {
     var response = await http.post(
       apiEndponts.getEndpoint(Endpoint.refresh_token).toString(),
       body: {"token": oldToken},
     );
+    final data = json.decode(response.body);
+
+    // mistake in docs??? (200) instead of (201)
     if (response.statusCode == 200) {
-      final data = json.decode(response.body);
       final newToken = data['token'];
       if (newToken != null) {
         await this._updateToken(newToken);
+        print('token refreshed');
         return newToken;
       }
     }
@@ -79,7 +89,7 @@ class Repository {
       Request ${apiEndponts.getEndpoint(Endpoint.refresh_token)} failed\n
       Response: ${response.statusCode} ${response.reasonPhrase}
     ''');
-    throw response;
+    throw Exception(data["details"]);
   }
 
   Future<void> logout() async {
@@ -104,7 +114,7 @@ class Repository {
 
       return UserModel(username: username, password: password, token: token);
     } else {
-      throw AuthException('No user stored');
+      return null;
     }
   }
 
