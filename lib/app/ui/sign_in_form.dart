@@ -1,6 +1,11 @@
+// 🐦 Flutter imports:
 import 'package:flutter/material.dart';
+
+// 📦 Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:nekidaem_kanban/app/blocs/login/login_bloc.dart';
+
+// 🌎 Project imports:
+import '../blocs/login/login_bloc.dart';
 
 class SignInForm extends StatefulWidget {
   @override
@@ -20,18 +25,15 @@ class _SignInFormState extends State<SignInForm> {
     final _loginBloc = BlocProvider.of<LoginBloc>(context);
 
     _onLoginButtonPressed() {
-      print(_usernameController.text);
-      print(_passwordController.text);
-      if (_key.currentState.validate()) {
+      FocusScope.of(context).unfocus();
+      final isValid = _key.currentState.validate();
+      if (isValid) {
+        _key.currentState.save();
         _loginBloc.add(LoginButtonPressed(
           username: _usernameController.text,
           // password: _passwordController.text,
           password: "FSH6zBZ0p9yH",
         ));
-      } else {
-        setState(() {
-          _autoValidate = true;
-        });
       }
     }
 
@@ -50,7 +52,6 @@ class _SignInFormState extends State<SignInForm> {
           }
           return Form(
             key: _key,
-            autovalidate: _autoValidate,
             child: SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -64,7 +65,7 @@ class _SignInFormState extends State<SignInForm> {
                     controller: _usernameController,
                     autocorrect: false,
                     validator: (value) {
-                      if (value == null) {
+                      if (value == '') {
                         return 'Username is required.';
                       }
                       return null;
@@ -82,14 +83,14 @@ class _SignInFormState extends State<SignInForm> {
                     obscureText: true,
                     controller: _passwordController,
                     validator: (value) {
-                      if (value == null) {
+                      if (value == '') {
                         return 'Password is required.';
                       }
                       return null;
                     },
                   ),
                   const SizedBox(
-                    height: 16,
+                    height: 50,
                   ),
                   RaisedButton(
                     color: Theme.of(context).primaryColor,
@@ -111,8 +112,12 @@ class _SignInFormState extends State<SignInForm> {
   }
 
   void _showError(String error) {
+    Scaffold.of(context).hideCurrentSnackBar();
     Scaffold.of(context).showSnackBar(SnackBar(
-      content: Text(error),
+      content: Text(
+        error,
+        style: TextStyle(color: Colors.white),
+      ),
       backgroundColor: Theme.of(context).errorColor,
     ));
   }

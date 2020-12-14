@@ -12,9 +12,9 @@ class CardsInitial extends CardsState {}
 class CardsLoading extends CardsState {}
 
 class CardsFetched extends CardsState {
-  final List<CardModel> cards;
+  final List<Map<String, dynamic>> rows;
 
-  CardsFetched({@required this.cards});
+  CardsFetched({@required this.rows});
 }
 
 class CardsFailure extends CardsState {

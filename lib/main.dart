@@ -1,10 +1,14 @@
+// 🐦 Flutter imports:
 import 'package:flutter/material.dart';
+
+// 📦 Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+
+// 🌎 Project imports:
 import 'package:nekidaem_kanban/app/blocs/authentication/auth_bloc.dart';
 import 'package:nekidaem_kanban/app/blocs/cards/cards_bloc.dart';
 import 'package:nekidaem_kanban/app/repositories/api.dart';
-
 import 'app/repositories/repository.dart';
 import 'app/ui/home_screen.dart';
 import 'app/ui/login_screen.dart';
@@ -27,8 +31,9 @@ class MyApp extends StatelessWidget {
         },
         child: MaterialApp(
           title: 'NeKidaem',
+          debugShowCheckedModeBanner: false,
           theme: ThemeData(
-            primarySwatch: Colors.cyan,
+            brightness: Brightness.dark,
           ),
           home: BlocBuilder<AuthBloc, AuthState>(
             builder: (_, state) {

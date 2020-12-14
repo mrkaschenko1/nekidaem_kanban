@@ -1,11 +1,16 @@
+// 🎯 Dart imports:
 import 'dart:async';
 import 'dart:io';
 
+// 🐦 Flutter imports:
+import 'package:flutter/foundation.dart';
+
+// 📦 Package imports:
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutter/foundation.dart';
-import 'package:http/http.dart';
-import 'package:nekidaem_kanban/app/exceptions/auth_exception.dart';
+
+// 🌎 Project imports:
+import '../../exceptions/auth_exception.dart';
 import '../../repositories/repository.dart';
 import '../authentication/auth_bloc.dart';
 

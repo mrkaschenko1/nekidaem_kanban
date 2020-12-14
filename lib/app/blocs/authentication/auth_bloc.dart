@@ -1,10 +1,16 @@
+// 🎯 Dart imports:
 import 'dart:async';
 
+// 🐦 Flutter imports:
+import 'package:flutter/foundation.dart';
+
+// 📦 Package imports:
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutter/foundation.dart';
-import 'package:nekidaem_kanban/app/models/user_model.dart';
-import 'package:nekidaem_kanban/app/repositories/repository.dart';
+
+// 🌎 Project imports:
+import '../../models/user_model.dart';
+import '../../repositories/repository.dart';
 
 part 'auth_event.dart';
 part 'auth_state.dart';

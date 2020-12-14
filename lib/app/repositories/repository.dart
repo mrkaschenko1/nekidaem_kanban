@@ -1,11 +1,18 @@
+// 🎯 Dart imports:
 import 'dart:convert';
 
+// 🐦 Flutter imports:
 import 'package:flutter/foundation.dart';
+
+// 📦 Package imports:
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:nekidaem_kanban/app/exceptions/auth_exception.dart';
-import 'package:nekidaem_kanban/app/models/user_model.dart';
-import '../models/card_model.dart';
 import 'package:http/http.dart' as http;
+
+// 🌎 Project imports:
+import '../exceptions/auth_exception.dart';
+import '../models/card_model.dart';
+import '../models/user_model.dart';
+import '../repositories/card_row.dart';
 import 'api.dart';
 
 class Repository {
@@ -37,10 +44,10 @@ class Repository {
         return user;
       }
     }
-    throw AuthException(response.reasonPhrase);
+    throw AuthException(responseBody['non_field_errors'][0]);
   }
 
-  Future<List<CardModel>> getCards() async {
+  Future<List<CardModel>> _getCards() async {
     var token = await this.token;
     var response = await http.get(
       apiEndponts.getEndpoint(Endpoint.cards).toString(),
@@ -61,12 +68,24 @@ class Repository {
             cardsJson.map((cardJson) => CardModel.fromJson(cardJson)).toList();
         return cards;
       }
-    }
-    print('''
+      print('''
       Request ${apiEndponts.getEndpoint(Endpoint.cards)} failed\n
       Response: ${response.statusCode} ${response.reasonPhrase}
     ''');
-    throw response;
+      throw AuthException(response.reasonPhrase);
+    }
+  }
+
+  Future<List<Map<String, dynamic>>> getCardsInRows() async {
+    final cards = await _getCards();
+    final List<Map<String, dynamic>> cardLists = List(CardRow.values.length);
+    CardRow.values.forEach((element) {
+      cardLists[element.index] = {'title': element.displayTitle, 'cards': []};
+    });
+    for (var card in cards) {
+      cardLists[card.row]['cards'].add(card);
+    }
+    return cardLists;
   }
 
   Future<String> refreshToken(String oldToken) async {
@@ -89,7 +108,7 @@ class Repository {
       Request ${apiEndponts.getEndpoint(Endpoint.refresh_token)} failed\n
       Response: ${response.statusCode} ${response.reasonPhrase}
     ''');
-    throw Exception(data["details"]);
+    throw AuthException(data["details"]);
   }
 
   Future<void> logout() async {

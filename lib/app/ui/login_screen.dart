@@ -1,7 +1,11 @@
+// 🐦 Flutter imports:
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:nekidaem_kanban/app/blocs/authentication/auth_bloc.dart';
 
+// 📦 Package imports:
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+// 🌎 Project imports:
+import '../blocs/authentication/auth_bloc.dart';
 import 'auth_form.dart';
 
 class LoginScreen extends StatelessWidget {

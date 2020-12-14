@@ -1,9 +1,14 @@
+// 🐦 Flutter imports:
 import 'package:flutter/material.dart';
+
+// 📦 Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:nekidaem_kanban/app/blocs/authentication/auth_bloc.dart';
-import 'package:nekidaem_kanban/app/blocs/login/login_bloc.dart';
-import 'package:nekidaem_kanban/app/repositories/repository.dart';
-import 'package:nekidaem_kanban/app/ui/sign_in_form.dart';
+
+// 🌎 Project imports:
+import '../blocs/authentication/auth_bloc.dart';
+import '../blocs/login/login_bloc.dart';
+import '../repositories/repository.dart';
+import 'sign_in_form.dart';
 
 class AuthForm extends StatelessWidget {
   @override
