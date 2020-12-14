@@ -1,14 +1,14 @@
-// 🎯 Dart imports:
+// Dart imports:
 import 'dart:convert';
 
-// 🐦 Flutter imports:
+// Flutter imports:
 import 'package:flutter/foundation.dart';
 
-// 📦 Package imports:
+// Package imports:
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 
-// 🌎 Project imports:
+// Project imports:
 import '../exceptions/auth_exception.dart';
 import '../models/card_model.dart';
 import '../models/user_model.dart';
@@ -76,14 +76,23 @@ class Repository {
     }
   }
 
-  Future<List<Map<String, dynamic>>> getCardsInRows() async {
+  Future<List<Map<String, dynamic>>> getFilteredAndSortedCards() async {
     final cards = await _getCards();
     final List<Map<String, dynamic>> cardLists = List(CardRow.values.length);
     CardRow.values.forEach((element) {
-      cardLists[element.index] = {'title': element.displayTitle, 'cards': []};
+      cardLists[element.index] = {
+        'title': element.displayTitle,
+        'cards': <CardModel>[]
+      };
     });
-    for (var card in cards) {
+    for (final card in cards) {
       cardLists[card.row]['cards'].add(card);
+    }
+    for (final row in cardLists) {
+      Comparator<CardModel> sortingFunction =
+          (a, b) => a.seqNum.compareTo(b.seqNum);
+      row['cards'].sort(sortingFunction);
+      print(row['cards']);
     }
     return cardLists;
   }

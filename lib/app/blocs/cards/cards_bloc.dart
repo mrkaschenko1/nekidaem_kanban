@@ -30,7 +30,7 @@ class CardsBloc extends Bloc<CardsEvent, CardsState> {
     if (event is CardsFetch) {
       yield CardsLoading();
       try {
-        final rows = await _repository.getCardsInRows();
+        final rows = await _repository.getFilteredAndSortedCards();
         yield CardsFetched(rows: rows);
       } on SocketException {
         yield CardsFailure(message: 'Network Exception');

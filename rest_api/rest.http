@@ -9,7 +9,7 @@ Content-Type: application/json
 ###
 GET {{base_url}}/cards/
 Accept: application/json
-Authorization: JWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoyMzksInVzZXJuYW1lIjoiYXJtYWRhIiwiZXhwIjoxNjA3OTY3MDI1LCJlbWFpbCI6IiIsIm9yaWdfaWF0IjoxNjA3OTYzNDI1fQ._CkZUCr_xHr0riFWy8eTcAwPp1f4iyLDjpoeFYR4n0g
+Authorization: JWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoyMzksInVzZXJuYW1lIjoiYXJtYWRhIiwiZXhwIjoxNjA3OTg2Mzk2LCJlbWFpbCI6IiIsIm9yaWdfaWF0IjoxNjA3OTgyNzk2fQ.vfqNtN0_BCDU9GPF7vM6oviasOHmJOPupycHSn0rfwc
 
 ###
 POST {{base_url}}/users/refresh_token/

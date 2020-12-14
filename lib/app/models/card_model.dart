@@ -26,4 +26,9 @@ class CardModel extends Equatable {
 
   @override
   List<Object> get props => [id, row, seqNum, text];
+
+  @override
+  String toString() {
+    return seqNum.toString();
+  }
 }
