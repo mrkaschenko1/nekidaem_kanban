@@ -5,15 +5,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 // 🌎 Project imports:
-import '../blocs/authentication/auth_bloc.dart';
-import 'auth_form.dart';
+import '../../blocs/authentication/auth_bloc.dart';
+import '../widgets/auth_form.dart';
 
 class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Kanban Login'),
+        title: Text('Kanban'),
       ),
       body: SafeArea(
           minimum: const EdgeInsets.all(16),

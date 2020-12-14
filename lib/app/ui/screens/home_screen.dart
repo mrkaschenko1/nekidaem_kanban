@@ -3,13 +3,14 @@ import 'package:flutter/material.dart';
 
 // 📦 Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:nekidaem_kanban/app_localizations.dart';
 
 // 🌎 Project imports:
-import '../blocs/authentication/auth_bloc.dart';
-import '../blocs/cards/cards_bloc.dart';
-import '../models/user_model.dart';
-import '../repositories/card_row.dart';
-import 'card_list_view.dart';
+import '../../blocs/authentication/auth_bloc.dart';
+import '../../blocs/cards/cards_bloc.dart';
+import '../../models/user_model.dart';
+import '../../repositories/card_row.dart';
+import '../widgets/card_list_view.dart';
 
 class HomeScreen extends StatefulWidget {
   final UserModel user;
@@ -41,7 +42,7 @@ class _HomeScreenState extends State<HomeScreen>
     print(CardRow.values);
     return Scaffold(
       appBar: AppBar(
-        title: Text('Home Page'),
+        title: Text('Kanban'),
         actions: [
           IconButton(
             icon: Icon(Icons.logout),
@@ -84,7 +85,9 @@ class _HomeScreenState extends State<HomeScreen>
                 children: [
                   Text(state.message),
                   FlatButton(
-                    child: Text('Try again'),
+                    child: Text(
+                      AppLocalizations.of(context).translate('try_again'),
+                    ),
                     onPressed: () {
                       BlocProvider.of<CardsBloc>(context).add(CardsFetch());
                     },

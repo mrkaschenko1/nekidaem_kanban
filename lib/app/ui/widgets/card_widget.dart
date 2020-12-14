@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 
 // 🌎 Project imports:
-import '../models/card_model.dart';
+import '../../models/card_model.dart';
 
 class CardWidget extends StatelessWidget {
   final CardModel card;

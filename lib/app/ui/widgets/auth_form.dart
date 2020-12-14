@@ -5,9 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 // 🌎 Project imports:
-import '../blocs/authentication/auth_bloc.dart';
-import '../blocs/login/login_bloc.dart';
-import '../repositories/repository.dart';
+import '../../blocs/authentication/auth_bloc.dart';
+import '../../blocs/login/login_bloc.dart';
+import '../../repositories/repository.dart';
 import 'sign_in_form.dart';
 
 class AuthForm extends StatelessWidget {

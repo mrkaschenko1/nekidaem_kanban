@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 
 // 🌎 Project imports:
-import '../ui/card_widget.dart';
+import 'card_widget.dart';
 
 class CardListView extends StatelessWidget {
   final Map<String, dynamic> row;
