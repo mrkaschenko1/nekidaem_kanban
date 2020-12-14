@@ -31,8 +31,7 @@ class _SignInFormState extends State<SignInForm> {
         _key.currentState.save();
         _loginBloc.add(LoginButtonPressed(
           username: _usernameController.text,
-          // password: _passwordController.text,
-          password: "FSH6zBZ0p9yH",
+          password: _passwordController.text,
         ));
       }
     }
